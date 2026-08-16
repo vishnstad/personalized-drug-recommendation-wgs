@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local micromamba toolchain (bcftools/htslib), not meant to be committed
+.tools/
+
+# data/raw/ and data/processed/ ARE committed (small, ~1.5MB, the milestone-1 deliverable)
+# data/test/ stays ignored -- for local scratch testing only
+data/test/*
+!data/test/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
