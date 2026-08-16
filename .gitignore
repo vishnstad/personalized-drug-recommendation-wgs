@@ -11,6 +11,15 @@ __pycache__/
 data/test/*
 !data/test/.gitkeep
 
+# knowledge_graph/ pulls live from CPIC/HGNC/SIDER APIs on every run (regenerable,
+# and the raw CPIC diplotype dump alone is ~120MB) -- cache is local-only, not committed
+knowledge_graph/data/
+
+# explainability render output (PyVis HTML) -- generated, not committed
+explainability/output/
+
+.env
+
 # OS
 .DS_Store
 Thumbs.db
