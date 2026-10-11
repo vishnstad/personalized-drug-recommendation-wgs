@@ -35,6 +35,17 @@ claim with its CPIC evidence grade before it reaches an LLM prompt
 for the full writeup, and `knowledge_graph/etl/run_etl.sh` to reproduce the
 graph end to end (`docker compose up -d && bash knowledge_graph/etl/run_etl.sh`).
 
+### Dataset, validation and literature docs
+
+| Doc | Covers |
+|---|---|
+| [`docs/dataset_provenance.md`](docs/dataset_provenance.md) | how the 1000 Genomes data was obtained, ancestry breakdown (5 superpopulations / 26 populations), allele frequencies, limitations |
+| [`docs/pharmacogenes_biology.md`](docs/pharmacogenes_biology.md) | CYP2C19 and CYP2D6 biology: location, alleles, mechanisms, drugs, phenotype methods |
+| [`docs/phenotypes_and_drugs.md`](docs/phenotypes_and_drugs.md) | phenotype categories and frequencies; drugs per gene grouped by CPIC guideline and ATC class |
+| [`docs/neo4j_validation.md`](docs/neo4j_validation.md) | graph validation against live CPIC (`knowledge_graph/validate_graph.py`) and findings |
+| [`docs/tool_versions.md`](docs/tool_versions.md) | versions of every tool and data release used |
+| [`docs/related_work.md`](docs/related_work.md) | similar systems, and what we absorb from each paper (by category) |
+
 ## Project structure
 
 ```
@@ -46,6 +57,7 @@ genomic/       # VCF inspection / processing scripts
 knowledge_graph/  # Neo4j schema, ETL (CPIC/HGNC/SIDER), Cypher queries
 retrieval/        # graph-based retrieval logic (Layer 3's interface into the KG)
 explainability/   # per-recommendation path rendering + CPIC evidence tagging
+analysis/         # ancestry/allele-frequency and phenotype/drug-grouping reports
 llm/              # (future) LLM prompting / explanation generation
 backend/          # (future) FastAPI service
 frontend/         # (future) Streamlit UI
