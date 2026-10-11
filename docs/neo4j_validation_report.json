@@ -1,0 +1,117 @@
+[
+  {
+    "check": "Gene nodes == CPIC gene rows",
+    "pass": true,
+    "detail": "graph=132 cpic=132"
+  },
+  {
+    "check": "Drug nodes == CPIC drug rows",
+    "pass": true,
+    "detail": "graph=324 cpic=324"
+  },
+  {
+    "check": "Guideline nodes == CPIC guideline rows",
+    "pass": true,
+    "detail": "graph=29 cpic=29"
+  },
+  {
+    "check": "Recommendation nodes == CPIC recommendation rows",
+    "pass": true,
+    "detail": "graph=2115 cpic=2115"
+  },
+  {
+    "check": "ASSOCIATED_WITH edges == CPIC non-removed pairs",
+    "pass": true,
+    "detail": "graph=574 cpic=574"
+  },
+  {
+    "check": "every Recommendation has exactly one RECOMMENDS edge",
+    "pass": true,
+    "detail": "edges=2115"
+  },
+  {
+    "check": "no Recommendation without a drug",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "no Recommendation without a guideline",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "no Diplotype without exactly one Phenotype",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "no Diplotype without its Gene",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "Phenotype.gene always matches a Gene node",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "Gene.hgnc_id malformed (expect HGNC:<digits>)",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "Drug.rxnorm_id is not a '<namespace>:<id>' key",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "Drug ID namespaces (info)",
+    "pass": true,
+    "detail": "{'ATC': 14, 'Drugbank': 2, 'MeSH': 2, 'MedDRA': 1, 'RxNorm': 305}"
+  },
+  {
+    "check": "Drugs with CPIC placeholder RxNorm:NA (known CPIC data gap)",
+    "pass": true,
+    "detail": "count=1"
+  },
+  {
+    "check": "Publication.pmid not numeric",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "cpic_level values are all valid CPIC grades",
+    "pass": true,
+    "detail": "seen=['A', 'A/B', 'B', 'B/C', 'C', 'C/D', 'D', 'Retired']"
+  },
+  {
+    "check": "ADR nodes with no Drug pointing at them",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "duplicate (gene,drug) ASSOCIATED_WITH edges",
+    "pass": true,
+    "detail": "violations=0"
+  },
+  {
+    "check": "25 random Recommendations match CPIC (text, classification, drug)",
+    "pass": true,
+    "detail": "mismatches=0"
+  },
+  {
+    "check": "25 random gene-drug pairs: CPIC evidence level matches CPIC",
+    "pass": true,
+    "detail": "mismatches=0"
+  },
+  {
+    "check": "CYP2C19 present with phenotypes and drugs",
+    "pass": true,
+    "detail": "phenotypes=9 drugs=27"
+  },
+  {
+    "check": "CYP2D6 present with phenotypes and drugs",
+    "pass": true,
+    "detail": "phenotypes=6 drugs=79"
+  }
+]
