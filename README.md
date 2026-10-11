@@ -16,8 +16,9 @@ We are currently only working on obtaining a real 1000 Genomes sample, inspectin
 its VCF, and extracting the CYP2C19 / CYP2D6 pharmacogene regions. See
 [`docs/genomic_setup.md`](docs/genomic_setup.md) for full details once available.
 
-Not yet built: LLM/RAG, FastAPI backend, Streamlit frontend. These come in
-later milestones.
+Not yet built: PharmCAT phenotype calling, FastAPI backend, Streamlit frontend. The
+grounded recommender in `llm/` is built but has only been run with a stubbed model
+(see `docs/llm_layer.md`).
 
 ## Knowledge graph & explainability (Layer 2 / Layer 4)
 
@@ -44,6 +45,7 @@ graph end to end (`docker compose up -d && bash knowledge_graph/etl/run_etl.sh`)
 | [`docs/phenotypes_and_drugs.md`](docs/phenotypes_and_drugs.md) | phenotype categories and frequencies; drugs per gene grouped by CPIC guideline and ATC class |
 | [`docs/neo4j_validation.md`](docs/neo4j_validation.md) | graph validation against live CPIC (`knowledge_graph/validate_graph.py`) and findings |
 | [`docs/tool_versions.md`](docs/tool_versions.md) | versions of every tool and data release used |
+| [`docs/llm_layer.md`](docs/llm_layer.md) | Layer 3: graph-grounded recommender, faithfulness gate, design decisions, limitations |
 | [`docs/related_work.md`](docs/related_work.md) | similar systems, and what we absorb from each paper (by category) |
 
 ## Project structure
@@ -58,7 +60,7 @@ knowledge_graph/  # Neo4j schema, ETL (CPIC/HGNC/SIDER), Cypher queries
 retrieval/        # graph-based retrieval logic (Layer 3's interface into the KG)
 explainability/   # per-recommendation path rendering + CPIC evidence tagging
 analysis/         # ancestry/allele-frequency and phenotype/drug-grouping reports
-llm/              # (future) LLM prompting / explanation generation
+llm/              # graph-grounded recommendation + faithfulness-checked rationale
 backend/          # (future) FastAPI service
 frontend/         # (future) Streamlit UI
 scripts/          # setup / utility scripts
