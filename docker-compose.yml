@@ -1,0 +1,23 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: pgx-kg-neo4j
+    ports:
+      - "7474:7474"   # HTTP browser UI
+      - "7687:7687"   # Bolt driver
+    environment:
+      - NEO4J_AUTH=neo4j/pgxkgpassword
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+    volumes:
+      - neo4j_data:/data
+      - ./knowledge_graph/schema:/schema
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p pgxkgpassword 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  neo4j_data:

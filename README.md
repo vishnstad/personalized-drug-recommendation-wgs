@@ -16,8 +16,35 @@ We are currently only working on obtaining a real 1000 Genomes sample, inspectin
 its VCF, and extracting the CYP2C19 / CYP2D6 pharmacogene regions. See
 [`docs/genomic_setup.md`](docs/genomic_setup.md) for full details once available.
 
-Not yet built: Neo4j knowledge graph, LLM/RAG, FastAPI backend, Streamlit
-frontend, Docker Compose. These come in later milestones.
+Not yet built: LLM/RAG, FastAPI backend, Streamlit frontend. These come in
+later milestones.
+
+## Knowledge graph & explainability (Layer 2 / Layer 4)
+
+`knowledge_graph/` and `explainability/` are built and loaded from live data
+— no mocks. `knowledge_graph/etl/` pulls real, unauthenticated API data from
+CPIC (gene-drug pairs with CPIC A–D evidence grades, phenotype-gated
+recommendations, guidelines, publications), HGNC (gene → HGNC ID
+normalization), and SIDER (drug → adverse-event associations), normalizes it
+into the graph schema documented in `knowledge_graph/schema/schema.md`, and
+loads it into Neo4j. `retrieval/queries.py` is the Cypher path-retrieval
+interface the LLM/RAG layer calls. `explainability/` renders the exact
+subgraph behind any one recommendation (`render_path.py`) and tags every
+claim with its CPIC evidence grade before it reaches an LLM prompt
+(`evidence.py`). See `docs/layer2_writeup.md` and `docs/layer4_writeup.md`
+for the full writeup, and `knowledge_graph/etl/run_etl.sh` to reproduce the
+graph end to end (`docker compose up -d && bash knowledge_graph/etl/run_etl.sh`).
+
+### Dataset, validation and literature docs
+
+| Doc | Covers |
+|---|---|
+| [`docs/dataset_provenance.md`](docs/dataset_provenance.md) | how the 1000 Genomes data was obtained, ancestry breakdown (5 superpopulations / 26 populations), allele frequencies, limitations |
+| [`docs/pharmacogenes_biology.md`](docs/pharmacogenes_biology.md) | CYP2C19 and CYP2D6 biology: location, alleles, mechanisms, drugs, phenotype methods |
+| [`docs/phenotypes_and_drugs.md`](docs/phenotypes_and_drugs.md) | phenotype categories and frequencies; drugs per gene grouped by CPIC guideline and ATC class |
+| [`docs/neo4j_validation.md`](docs/neo4j_validation.md) | graph validation against live CPIC (`knowledge_graph/validate_graph.py`) and findings |
+| [`docs/tool_versions.md`](docs/tool_versions.md) | versions of every tool and data release used |
+| [`docs/related_work.md`](docs/related_work.md) | similar systems, and what we absorb from each paper (by category) |
 
 ## Project structure
 
@@ -27,8 +54,10 @@ data/
   processed/   # derived files (e.g. per-gene VCF subsets)
   test/        # small files used for quick local testing
 genomic/       # VCF inspection / processing scripts
-knowledge_graph/  # (future) Neo4j schema, loaders, Cypher queries
-retrieval/        # (future) graph-based retrieval logic
+knowledge_graph/  # Neo4j schema, ETL (CPIC/HGNC/SIDER), Cypher queries
+retrieval/        # graph-based retrieval logic (Layer 3's interface into the KG)
+explainability/   # per-recommendation path rendering + CPIC evidence tagging
+analysis/         # ancestry/allele-frequency and phenotype/drug-grouping reports
 llm/              # (future) LLM prompting / explanation generation
 backend/          # (future) FastAPI service
 frontend/         # (future) Streamlit UI
