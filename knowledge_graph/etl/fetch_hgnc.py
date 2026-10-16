@@ -16,7 +16,7 @@ RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 
 def main() -> None:
-    genes = json.loads((RAW_DIR / "cpic_gene.json").read_text())
+    genes = json.loads((RAW_DIR / "cpic_gene.json").read_text(encoding="utf-8"))
     symbols = sorted({g["symbol"] for g in genes if g.get("symbol")})
 
     lookup: dict[str, dict] = {}

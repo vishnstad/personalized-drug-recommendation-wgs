@@ -50,7 +50,7 @@ def download() -> None:
 # 0 stitch_id_flat, 1 stitch_id_stereo, 2 umls_cui_from_label, 3 meddra_type
 # (PT/LLT), 4 umls_cui_meddra, 5 side_effect_name
 def build_index() -> dict[str, list[dict]]:
-    cpic_drugs = json.loads((RAW_DIR / "cpic_drug.json").read_text())
+    cpic_drugs = json.loads((RAW_DIR / "cpic_drug.json").read_text(encoding="utf-8"))
     wanted_names = {normalize_name(d["name"]): d["name"] for d in cpic_drugs if d.get("name")}
 
     # SIDER has no drug name column directly -- it ships a separate drug_names file
