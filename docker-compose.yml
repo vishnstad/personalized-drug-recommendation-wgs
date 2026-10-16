@@ -19,5 +19,32 @@ services:
       retries: 10
       start_period: 30s
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: pgx-backend
+    ports:
+      - "8010:8010"   # API (/docs) + web UI (/)
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=pgxkgpassword
+      # any OpenAI-compatible endpoint; default reaches an Ollama running on the host (or its own container)
+      - LLM_BASE_URL=${LLM_BASE_URL_DOCKER:-http://host.docker.internal:11434/v1}
+      - LLM_MODEL=${LLM_MODEL:-qwen2.5:3b}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/app/data   # 1000 Genomes VCF slices in, per-sample PharmCAT outputs + profiles out
+      - ./frontend:/app/frontend:ro   # UI edits apply on browser refresh
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
 volumes:
   neo4j_data:
