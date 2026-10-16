@@ -1,61 +1,1670 @@
 {
-  "benchmark_cases_run": 5,
-  "total_plausibility_checks": 28,
-  "plausibility_pass_rate": "64.3%",
-  "faithfulness_gate_active": true,
-  "llm_endpoint_status": "offline (deterministic template fallback active)",
-  "cases": [
+  "generated": "2026-10-17",
+  "action_accuracy": {
+    "accuracy": "11/11",
+    "checks": [
+      {
+        "case": "cyp2c19_pm",
+        "drug": "clopidogrel",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2c19_pm",
+        "drug": "voriconazole",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2d6_pm",
+        "drug": "codeine",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2d6_pm",
+        "drug": "tramadol",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2d6_um",
+        "drug": "codeine",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2d6_um",
+        "drug": "tramadol",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2c19_pm_cyp2d6_um",
+        "drug": "clopidogrel",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2c19_pm_cyp2d6_um",
+        "drug": "codeine",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "cyp2c19_pm_cyp2d6_um",
+        "drug": "amitriptyline",
+        "expected": "avoid",
+        "got": "avoid",
+        "ok": true
+      },
+      {
+        "case": "both_nm",
+        "drug": "codeine",
+        "expected": "standard",
+        "got": "standard",
+        "ok": true
+      },
+      {
+        "case": "both_nm",
+        "drug": "clopidogrel",
+        "expected": "standard",
+        "got": "standard",
+        "ok": true
+      }
+    ]
+  },
+  "retrieval_scope": [
     {
-      "case_id": "case_1_poor_metabolizer_c19",
+      "case": "cyp2c19_pm",
+      "legacy_per_gene_rows": 42,
+      "patient_level_rows": 17,
+      "excess_rows_removed": 25,
+      "drugs": 14
+    },
+    {
+      "case": "cyp2d6_pm",
+      "legacy_per_gene_rows": 38,
+      "patient_level_rows": 18,
+      "excess_rows_removed": 20,
+      "drugs": 17
+    },
+    {
+      "case": "cyp2d6_um",
+      "legacy_per_gene_rows": 39,
+      "patient_level_rows": 19,
+      "excess_rows_removed": 20,
+      "drugs": 17
+    },
+    {
+      "case": "cyp2c19_pm_cyp2d6_um",
+      "legacy_per_gene_rows": 81,
+      "patient_level_rows": 31,
+      "excess_rows_removed": 50,
+      "drugs": 26
+    },
+    {
+      "case": "both_nm",
+      "legacy_per_gene_rows": 88,
+      "patient_level_rows": 30,
+      "excess_rows_removed": 58,
+      "drugs": 26
+    }
+  ],
+  "llm_grounding": {
+    "qwen2.5:3b": {
+      "explanations": 15,
+      "faithful_accepted": 14,
+      "faithfulness_pass_rate": "93%",
+      "median_seconds": 1.9,
+      "max_seconds": 2.4,
+      "samples": [
+        {
+          "case": "cyp2c19_pm",
+          "drug": "citalopram",
+          "seconds": 2.4,
+          "accepted": true,
+          "text": "The CPIC guidelines recommend considering a clinically appropriate antidepressant not predominantly metabolized by CYP2C19 due to the patient's CYP2C19 Poor Metabolizer phenotype. Given the patient's CYP2C19 phenotype, a lower starting dose, slower titration schedule, and 50% reduction of the standard maintenance dose as compared to normal metabolizers is recommended to avoid higher plasma concentrations and potential side effects. PMIDs: 25974703, 37032427",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm",
+          "drug": "escitalopram",
+          "seconds": 2.3,
+          "accepted": true,
+          "text": "The recommendation follows from the patient's CYP2C19 Poor Metabolizer phenotype, as stated in the CPIC guidelines (CPIC level A, PMID:25974703, PMID:37032427). Given this phenotype, the patient should be prescribed a clinically appropriate antidepressant not predominantly metabolized by CYP2C19. If escitalopram or citalopram are clinically appropriate, a lower starting dose, slower titration schedule, and a 50% reduction of the standard maintenance dose compared to normal metabolizers should be considered to avoid higher plasma concentrations and potential side effects.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm",
+          "drug": "lansoprazole",
+          "seconds": 2.1,
+          "accepted": true,
+          "text": "The patient's CYP2C19 Poor Metabolizer phenotype suggests they will have increased plasma concentration of lansoprazole compared to CYP2C19 Non-Metabolizers, which may lead to both increased efficacy and potential toxicity. Therefore, the recommended starting dose is standard, and for chronic therapy, a 50% reduction in daily dose is considered, with monitoring for continued efficacy. This recommendation is based on the CPIC guideline level A from PMID:32770672.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "hydrocodone",
+          "seconds": 2.4,
+          "accepted": true,
+          "text": "The recommendation follows because the patient is a Poor Metabolizer for CYP2D6, which means they will have decreased metabolism of hydrocodone to its active metabolite, hydromorphone. Given this phenotype, the CPIC guideline recommends using the label-recommended age- or weight-specific dosing for hydrocodone. If no response is observed and opioid use is warranted, consideration should be given to using non-codeine and non-tramadol opioids. This recommendation is based on the evidence from PMIDs 22205192, 24458010, and 33387367, and follows the CPIC level B guideline.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "atomoxetine",
+          "seconds": 1.0,
+          "accepted": true,
+          "text": "The CPIC guidelines recommend initiating atomoxetine at a dose of 0.5 mg/kg/day for pediatric patients who are CYP2D6 Poor Metabolizers, as this significantly decreased metabolism may result in higher concentrations and side effects, but also potentially greater symptom improvement.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "paroxetine",
+          "seconds": 1.4,
+          "accepted": true,
+          "text": "The patient's CYP2D6 phenotype as a Poor Metabolizer suggests significantly reduced metabolism of paroxetine compared to normal metabolizers. Therefore, the CPIC guideline recommends a 50% reduction in the starting dose, a slower titration schedule, and a 50% lower maintenance dose to avoid higher plasma concentrations and potential side effects. This recommendation is based on the Moderate CPIC level (A) guideline.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "atomoxetine",
+          "seconds": 1.9,
+          "accepted": true,
+          "text": "The recommendation follows from the patient's CYP2D6 Ultrarapid Metabolizer phenotype and CPIC guidelines. For this patient, the CPIC level A recommendation is to initiate with a dose of 0.5 mg/kg/day and increase to 1.2 mg/kg/day after 3 days. If no clinical response and in the absence of adverse events after 2 weeks, consider obtaining a peak plasma concentration and adjusting the dose as needed to achieve target concentrations.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "tamoxifen",
+          "seconds": 1.9,
+          "accepted": true,
+          "text": "The patient is a Tamoxifen Ultrarapid Metabolizer (CYP2D6). According to the CPIC guidelines, for patients with CYP2D6 Ultrarapid Metabolism, the recommendation is to avoid moderate and strong CYP2D6 inhibitors and initiate therapy with the recommended standard of care dosing (tamoxifen 20 mg/day). This recommendation is based on the CPIC Guideline for CYP2D6 and Tamoxifen Therapy in Breast Cancer (PMID:29385237).",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "amitriptyline",
+          "seconds": 1.9,
+          "accepted": true,
+          "text": "The recommendation follows as the patient is an Ultrarapid Metabolizer for CYP2D6, which aligns with the CPIC Level A guideline. Given this phenotype, the patient is at increased risk of pharmacotherapy failure with tricyclic antidepressants (TCAs) due to their rapid metabolism, leading to lower plasma concentrations of the active drug. Therefore, the recommendation suggests avoiding TCAs or considering an alternative not metabolized by CYP2D6, and if a TCA is warranted, titrating to a higher target dose.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "atomoxetine",
+          "seconds": 1.9,
+          "accepted": false,
+          "text": null,
+          "rejected": {
+            "text": "The recommendation follows as the patient is a Poor Metabolizer of CYP2D6 and Atomoxetine is primarily metabolized by CYP2D6. Given the patient's phenotype, the CPIC guidelines recommend initiating therapy with a dose of 0.5 mg/kg/day and increasing to 1.2 mg/kg/day after 3 days. If no clinical response is observed and in the absence of adverse events after 2 weeks, a peak plasma concentration should be obtained to assess if the dose needs to be increased to achieve target concentrations.",
+            "problems": [
+              "calls the patient a CYP2D6 Poor Metabolizer but they are CYP2D6 Ultrarapid Metabolizer"
+            ]
+          }
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "citalopram",
+          "seconds": 1.8,
+          "accepted": true,
+          "text": "The recommendation follows from the patient's CYP2C19 Poor Metabolizer phenotype, as stated in PMID:25974703 and PMID:37032427. Given this phenotype, the CPIC Level A recommendation suggests considering an alternative antidepressant, or if citalopram is clinically appropriate, a lower starting dose, slower titration schedule, and a 50% reduction of the standard maintenance dose compared to normal metabolizers.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "escitalopram",
+          "seconds": 1.6,
+          "accepted": true,
+          "text": "The recommendation follows from the patient's CYP2C19 Poor Metabolizer phenotype, as stated in PMID:25974703 and PMID:37032427. Given this phenotype, the CPIC guideline level A suggests considering a lower starting dose, slower titration schedule, and reducing the standard maintenance dose by 50% compared to normal metabolizers due to reduced metabolism of escitalopram and citalopram.",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "clopidogrel",
+          "seconds": 1.5,
+          "accepted": true,
+          "text": "The recommendation follows as the patient is a Normal Metabolizer for CYP2C19, which aligns with the CPIC Level A guidelines for the CVI ACS PCI population. The CPIC guidelines recommend using clopidogrel at standard dose (75 mg/day) due to the patient's CYP2C19 phenotype, ensuring normal clopidogrel active metabolite formation and maintaining normal on-treatment platelet reactivity.",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "codeine",
+          "seconds": 1.9,
+          "accepted": true,
+          "text": "The patient is a Normal Metabolizer for CYP2D6, as recommended by the CPIC Guideline for CYP2D6 and Codeine. Therefore, the recommendation is to use the label-recommended age- or weight-specific dosing for codeine, as expected morphine formation is expected. Reference: PMID:22205192, PMID:24458010, PMID:33387367. CPIC Level: A",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "tamoxifen",
+          "seconds": 1.2,
+          "accepted": true,
+          "text": "The patient is a Normal Metabolizer for CYP2D6, as recommended by the CPIC guideline, the patient should avoid moderate and strong CYP2D6 inhibitors. Therefore, the drug recommendation is to initiate therapy with the recommended standard of care dosing (tamoxifen 20 mg/day).",
+          "rejected": null
+        }
+      ]
+    },
+    "qwen2.5:latest": {
+      "explanations": 15,
+      "faithful_accepted": 15,
+      "faithfulness_pass_rate": "100%",
+      "median_seconds": 11.7,
+      "max_seconds": 17.4,
+      "samples": [
+        {
+          "case": "cyp2c19_pm",
+          "drug": "citalopram",
+          "seconds": 15.6,
+          "accepted": true,
+          "text": "The recommendation to consider a lower starting dose and slower titration schedule for citalopram in the patient with CYP2C19 Poor Metabolizer phenotype follows from CPIC guideline A, which states that citalopram is predominantly metabolized by CYP2C19, and reduced metabolism in poor metabolizers can lead to higher plasma concentrations and increased side effects risk, including prolonged QT interval and torsades de pointes. PMID:25974703, PMID:37032427.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm",
+          "drug": "escitalopram",
+          "seconds": 11.4,
+          "accepted": true,
+          "text": "The recommendation to use escitalopram follows from the patient's CYP2C19 Poor Metabolizer phenotype and CPIC guidelines, which suggest considering a lower starting dose, slower titration, and a 50% reduction in the standard maintenance dose. This is due to reduced metabolism of escitalopram, leading to higher plasma concentrations and increased side effect risk. PMID:37032427",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm",
+          "drug": "lansoprazole",
+          "seconds": 11.7,
+          "accepted": true,
+          "text": "The recommendation to initiate lansoprazole at the standard starting daily dose and consider a 50% reduction for chronic therapy follows from the patient's CYP2C19 Poor Metabolizer phenotype, as per CPIC guidelines (PMID:32770672). This is classified as a CPIC Level A recommendation, indicating strong evidence for this dosing strategy.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "hydrocodone",
+          "seconds": 16.8,
+          "accepted": true,
+          "text": "The recommendation to use hydrocodone follows from the patient's CYP2D6 Poor Metabolizer phenotype, as per CPIC Level B guidelines, which suggest using the label-recommended dosing. Given the patient's phenotype, there is insufficient evidence to determine if this will affect the analgesic response or side effects, but if no response is observed and opioid use is still warranted, non-codeine and non-tramadol opioids should be considered. PMID:22205192, PMID:24458010, PMID:33387367.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "atomoxetine",
+          "seconds": 14.8,
+          "accepted": true,
+          "text": "The recommendation to initiate atomoxetine at a lower dose (0.5 mg/kg/day for pediatrics or 40 mg/day for adults) and to titrate more slowly, with a target concentration of 400 ng/mL, follows from the patient's CYP2D6 Poor Metabolizer phenotype and CPIC guidelines (A level). This approach aims to reduce the risk of adverse effects while maximizing the potential therapeutic benefit, given the significantly increased drug exposure in poor metabolizers. PMIDs: 30801677",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_pm",
+          "drug": "paroxetine",
+          "seconds": 9.2,
+          "accepted": true,
+          "text": "The recommendation to consider a 50% reduction in the starting dose and a slower titration schedule for paroxetine follows from the patient's CYP2D6 Poor Metabolizer phenotype, as per CPIC guidelines at level A (PMID:25974703, PMID:37032427).",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "atomoxetine",
+          "seconds": 7.6,
+          "accepted": true,
+          "text": "The recommendation to initiate atomoxetine at a higher dose for the ultrarapid metabolizer phenotype is based on the limited data indicating that these individuals may not achieve adequate serum concentrations for the intended effect at standard dosing, as per CPIC guideline A.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "tamoxifen",
+          "seconds": 12.0,
+          "accepted": true,
+          "text": "The recommendation to initiate tamoxifen therapy with the standard dose of 20 mg/day follows from the patient's CYP2D6 ultrarapid metabolizer phenotype, as per CPIC Level A guidelines (PMID: 29385237). This phenotype ensures therapeutic endoxifen concentrations, supporting the standard dosing approach.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2d6_um",
+          "drug": "amitriptyline",
+          "seconds": 11.6,
+          "accepted": true,
+          "text": "The recommendation to avoid tricyclic use due to potential lack of efficacy in ultrarapid metabolizers follows from the increased metabolism of TCAs to less active compounds, resulting in lower plasma concentrations of active drug. This increases the probability of pharmacotherapy failure, as per CPIC Level A guidelines (PMID: 23486447, 27997040).",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "atomoxetine",
+          "seconds": 9.3,
+          "accepted": true,
+          "text": "The recommendation to use atomoxetine follows from the patient's CYP2D6 ultrarapid metabolizer phenotype and CPIC guidelines, which suggest initiating with a higher dose and increasing based on plasma concentration to achieve therapeutic levels, given the limited data indicating poor response in ultrarapid metabolizers. PMID:30801677",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "citalopram",
+          "seconds": 10.0,
+          "accepted": true,
+          "text": "The recommendation to consider a lower starting dose and slower titration schedule for citalopram follows from the patient's CYP2C19 Poor Metabolizer phenotype, as this results in reduced metabolism and higher plasma concentrations, increasing the risk of side effects. This recommendation aligns with CPIC Level A guidelines, which are strong recommendations based on evidence.",
+          "rejected": null
+        },
+        {
+          "case": "cyp2c19_pm_cyp2d6_um",
+          "drug": "escitalopram",
+          "seconds": 12.0,
+          "accepted": true,
+          "text": "The recommendation to use escitalopram follows from the patient's CYP2C19 Poor Metabolizer phenotype and CPIC guidelines, which suggest considering a lower starting dose, slower titration, and a 50% reduction in the standard maintenance dose. This is due to reduced metabolism of escitalopram, leading to higher plasma concentrations and increased side effect risk. PMID:25974703, PMID:37032427.",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "clopidogrel",
+          "seconds": 14.6,
+          "accepted": true,
+          "text": "The recommendation to use clopidogrel at the standard dose (75 mg/day) follows from the patient's CYP2C19 normal metabolizer phenotype and CPIC guidelines, which state that normal CYP2C19 metabolism ensures adequate clopidogrel active metabolite formation and on-treatment platelet reactivity. This aligns with CPIC Level A recommendations for standard-dose clopidogrel in various clinical populations, including those with coronary artery disease (CAD) and non-coronary artery disease (NCD) conditions.",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "codeine",
+          "seconds": 17.4,
+          "accepted": true,
+          "text": "The recommendation to use codeine with age- or weight-specific dosing follows from the patient's CYP2D6 normal metabolizer phenotype and CPIC guideline level A, which indicates that normal metabolizers are expected to form adequate morphine from codeine, ensuring effective analgesia without increased risk of adverse effects. PMID:22205192, PMID:24458010, PMID:33387367",
+          "rejected": null
+        },
+        {
+          "case": "both_nm",
+          "drug": "tamoxifen",
+          "seconds": 8.7,
+          "accepted": true,
+          "text": "The recommendation to initiate tamoxifen therapy with the standard dose of 20 mg/day follows from the patient's CYP2D6 normal metabolizer phenotype and CPIC guideline level A, which states that therapeutic endoxifen concentrations are maintained in normal metabolizers. PMID:29385237",
+          "rejected": null
+        }
+      ]
+    }
+  },
+  "real_samples_missing_positions_filled": [
+    {
+      "sample": "NA12878",
+      "population": "EUR",
+      "diplotypes": {
+        "CYP2D6": "*3/*4",
+        "CYP2C19": "*1/*2"
+      },
       "phenotypes": {
+        "CYP2D6": "Poor Metabolizer",
+        "CYP2C19": "Intermediate Metabolizer"
+      },
+      "actions": {
+        "standard": 2,
+        "adjust": 9,
+        "review": 4,
+        "avoid": 11
+      },
+      "seconds": 11.4
+    },
+    {
+      "sample": "HG01879",
+      "population": "AFR",
+      "diplotypes": {
+        "CYP2D6": "*1/*1",
+        "CYP2C19": "*17/*17"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Ultrarapid Metabolizer"
+      },
+      "actions": {
+        "standard": 5,
+        "adjust": 12,
+        "review": 1,
+        "avoid": 8
+      },
+      "seconds": 10.9
+    },
+    {
+      "sample": "NA20412",
+      "population": "AFR",
+      "diplotypes": {
+        "CYP2D6": "*1/*2",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 7,
+        "adjust": 19
+      },
+      "seconds": 11.2
+    },
+    {
+      "sample": "HG00551",
+      "population": "AMR",
+      "diplotypes": {
+        "CYP2D6": "*1/*1",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 7,
+        "adjust": 19
+      },
+      "seconds": 11.8
+    },
+    {
+      "sample": "NA19796",
+      "population": "AMR",
+      "diplotypes": {
+        "CYP2D6": "*1/*2",
+        "CYP2C19": "*1/*38"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 7,
+        "adjust": 19
+      },
+      "seconds": 11.2
+    },
+    {
+      "sample": "HG00403",
+      "population": "EAS",
+      "diplotypes": {
+        "CYP2D6": "*1/*10",
+        "CYP2C19": "*1/*3"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Intermediate Metabolizer"
+      },
+      "actions": {
+        "standard": 6,
+        "adjust": 19,
+        "avoid": 1
+      },
+      "seconds": 11.6
+    },
+    {
+      "sample": "NA19091",
+      "population": "EAS",
+      "diplotypes": {
+        "CYP2D6": "*1/*2",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 7,
+        "adjust": 19
+      },
+      "seconds": 11.6
+    },
+    {
+      "sample": "HG00096",
+      "population": "EUR",
+      "diplotypes": {
+        "CYP2D6": "*1/*4",
+        "CYP2C19": "*1/*2"
+      },
+      "phenotypes": {
+        "CYP2D6": "Intermediate Metabolizer",
+        "CYP2C19": "Intermediate Metabolizer"
+      },
+      "actions": {
+        "standard": 5,
+        "adjust": 18,
+        "review": 1,
+        "avoid": 1,
+        "none": 1
+      },
+      "seconds": 12.0
+    },
+    {
+      "sample": "NA20832",
+      "population": "EUR",
+      "diplotypes": {
+        "CYP2D6": "*1/*2",
+        "CYP2C19": "*1/*17"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Rapid Metabolizer"
+      },
+      "actions": {
+        "standard": 6,
+        "adjust": 12,
+        "review": 2,
+        "avoid": 6
+      },
+      "seconds": 11.5
+    },
+    {
+      "sample": "HG01583",
+      "population": "SAS",
+      "diplotypes": {
+        "CYP2D6": "*4/*41",
+        "CYP2C19": "*2/*2"
+      },
+      "phenotypes": {
+        "CYP2D6": "Intermediate Metabolizer",
         "CYP2C19": "Poor Metabolizer"
       },
-      "recommendations_evaluated": 0,
-      "faithful_explanations": 0,
-      "hallucinations_detected": 0,
-      "passed_expected_checks": true
+      "actions": {
+        "standard": 4,
+        "adjust": 12,
+        "review": 2,
+        "avoid": 7,
+        "none": 1
+      },
+      "seconds": 12.8
     },
     {
-      "case_id": "case_2_poor_metabolizer_d6",
-      "phenotypes": {
-        "CYP2D6": "Poor Metabolizer"
+      "sample": "NA21144",
+      "population": "SAS",
+      "diplotypes": {
+        "CYP2D6": "*1/*2",
+        "CYP2C19": "*1/*17"
       },
-      "recommendations_evaluated": 0,
-      "faithful_explanations": 0,
-      "hallucinations_detected": 0,
-      "passed_expected_checks": true
-    },
-    {
-      "case_id": "case_3_ultrarapid_metabolizer_d6",
       "phenotypes": {
-        "CYP2D6": "Ultrarapid Metabolizer"
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Rapid Metabolizer"
       },
-      "recommendations_evaluated": 0,
-      "faithful_explanations": 0,
-      "hallucinations_detected": 0,
-      "passed_expected_checks": true
-    },
-    {
-      "case_id": "case_4_multi_gene_pm_um",
-      "phenotypes": {
-        "CYP2C19": "Poor Metabolizer",
-        "CYP2D6": "Ultrarapid Metabolizer"
+      "actions": {
+        "standard": 6,
+        "adjust": 12,
+        "review": 2,
+        "avoid": 6
       },
-      "recommendations_evaluated": 0,
-      "faithful_explanations": 0,
-      "hallucinations_detected": 0,
-      "passed_expected_checks": true
-    },
-    {
-      "case_id": "case_5_normal_metabolizer_both",
-      "phenotypes": {
-        "CYP2C19": "Normal Metabolizer",
-        "CYP2D6": "Normal Metabolizer"
-      },
-      "recommendations_evaluated": 0,
-      "faithful_explanations": 0,
-      "hallucinations_detected": 0,
-      "passed_expected_checks": true
+      "seconds": 11.7
     }
-  ]
+  ],
+  "real_samples_without_fill": [
+    {
+      "sample": "HG01879",
+      "population": "AFR",
+      "diplotypes": {
+        "CYP2D6": "*1/*1",
+        "CYP2C19": "*17/*17"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Ultrarapid Metabolizer"
+      },
+      "actions": {
+        "standard": 5,
+        "adjust": 12,
+        "review": 1,
+        "avoid": 8
+      },
+      "seconds": 7.7
+    },
+    {
+      "sample": "NA20412",
+      "population": "AFR",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (25 candidates)",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 2,
+        "adjust": 7,
+        "none": 17
+      },
+      "seconds": 10.9
+    },
+    {
+      "sample": "HG00551",
+      "population": "AMR",
+      "diplotypes": {
+        "CYP2D6": "*1/*1",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Normal Metabolizer",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 7,
+        "adjust": 19
+      },
+      "seconds": 10.4
+    },
+    {
+      "sample": "NA19796",
+      "population": "AMR",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (25 candidates)",
+        "CYP2C19": "*1/*38"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 2,
+        "adjust": 7,
+        "none": 17
+      },
+      "seconds": 12.4
+    },
+    {
+      "sample": "HG00403",
+      "population": "EAS",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (13 candidates)",
+        "CYP2C19": "*1/*3"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Intermediate Metabolizer"
+      },
+      "actions": {
+        "standard": 1,
+        "adjust": 7,
+        "avoid": 1,
+        "none": 17
+      },
+      "seconds": 9.1
+    },
+    {
+      "sample": "NA19091",
+      "population": "EAS",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (25 candidates)",
+        "CYP2C19": "*1/*1"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Normal Metabolizer"
+      },
+      "actions": {
+        "standard": 2,
+        "adjust": 7,
+        "none": 17
+      },
+      "seconds": 10.8
+    },
+    {
+      "sample": "HG00096",
+      "population": "EUR",
+      "diplotypes": {
+        "CYP2D6": "*1/*4",
+        "CYP2C19": "*1/*2"
+      },
+      "phenotypes": {
+        "CYP2D6": "Intermediate Metabolizer",
+        "CYP2C19": "Intermediate Metabolizer"
+      },
+      "actions": {
+        "standard": 5,
+        "adjust": 18,
+        "review": 1,
+        "avoid": 1,
+        "none": 1
+      },
+      "seconds": 9.5
+    },
+    {
+      "sample": "NA20832",
+      "population": "EUR",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (25 candidates)",
+        "CYP2C19": "*1/*17"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Rapid Metabolizer"
+      },
+      "actions": {
+        "standard": 1,
+        "adjust": 5,
+        "review": 2,
+        "avoid": 6,
+        "none": 12
+      },
+      "seconds": 10.6
+    },
+    {
+      "sample": "HG01583",
+      "population": "SAS",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (4 candidates)",
+        "CYP2C19": "*2/*2"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Poor Metabolizer"
+      },
+      "actions": {
+        "adjust": 6,
+        "review": 1,
+        "avoid": 7,
+        "none": 12
+      },
+      "seconds": 10.4
+    },
+    {
+      "sample": "NA21144",
+      "population": "SAS",
+      "diplotypes": {
+        "CYP2D6": "ambiguous (25 candidates)",
+        "CYP2C19": "*1/*17"
+      },
+      "phenotypes": {
+        "CYP2D6": "Indeterminate",
+        "CYP2C19": "Rapid Metabolizer"
+      },
+      "actions": {
+        "standard": 1,
+        "adjust": 5,
+        "review": 2,
+        "avoid": 6,
+        "none": 12
+      },
+      "seconds": 13.6
+    }
+  ],
+  "detailed_explanations": {
+    "model": "qwen2.5:3b",
+    "explanations": 18,
+    "accepted": 17,
+    "accepted_first_try": 14,
+    "accepted_after_retry": 3,
+    "median_seconds": 3.5,
+    "median_llm_words": 121,
+    "rows": [
+      {
+        "sample": "NA12878",
+        "drug": "imipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 2,
+        "seconds": 5.8,
+        "llm_words": 121,
+        "first_try_problems": [
+          "calls the patient a CYP2C19 Poor Metabolizer but they are CYP2C19 Intermediate Metabolizer"
+        ],
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with CYP2C19 Intermediate Metabolizer and CYP2D6 Poor Metabolizer, CPIC recommends avoiding imipramine use. If use is necessary, consider a 50% reduction of the recommended starting dose and utilize therapeutic drug monitoring to guide dose adjustments.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *2 (no function). CPIC classifies this combination as an Intermediate Metabolizer. One copy of CYP2D6 carries *3 (no function) and the other carries *4 (no function). Their activity values (0.0 + 0.0) give an activity score of 0.0, which CPIC classifies as a Poor Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "The patient's CYP2D6 Poor Metabolizer phenotype results in greatly reduced metabolism of tricyclic antidepressants (TCAs) to less active compounds compared to normal metabolizers, leading to higher plasma concentrations of active drug and increased side effects risk. The CYP2C19 Intermediate Metabolizer phenotype results in reduced metabolism of tertiary amines compared to normal metabolizers.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer + CYP2D6 Poor Metabolizer: Avoid imipramine use. If a imipramine is warranted, consider a 50% reduction of recommended starting dose. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC recommends monitoring therapeutic drug levels to adjust doses as needed, reflecting the genetic differences in metabolism. Other factors such as age and organ function also influence the use of imipramine.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "NA12878",
+        "drug": "trimipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.5,
+        "llm_words": 109,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with CYP2C19 as an Intermediate Metabolizer and CYP2D6 as a Poor Metabolizer, CPIC recommends avoiding trimipramine use. If trimipramine is necessary, a 50% reduction in the starting dose is advised, and therapeutic drug monitoring should be used to adjust the dose appropriately.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *2 (no function). CPIC classifies this combination as an Intermediate Metabolizer. One copy of CYP2D6 carries *3 (no function) and the other carries *4 (no function). Their activity values (0.0 + 0.0) give an activity score of 0.0, which CPIC classifies as a Poor Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "CYP2D6 Poor Metabolizers have greatly reduced metabolism of tricyclic antidepressants (TCAs) to less active compounds compared to normal metabolizers, leading to higher plasma concentrations of active drug and an increased risk of side effects. CYP2C19 Intermediate Metabolizers have reduced metabolism of tertiary amines compared to normal metabolizers.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer + CYP2D6 Poor Metabolizer: Avoid trimipramine use. If a trimipramine is warranted, consider a 50% reduction of recommended starting dose. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC also recommends monitoring therapeutic drug levels to adjust the dose, reflecting the genetic differences in metabolism.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "NA12878",
+        "drug": "venlafaxine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.0,
+        "llm_words": 111,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For a patient who is a CYP2D6 Poor Metabolizer, CPIC recommends considering an alternative antidepressant due to decreased metabolism of venlafaxine, leading to higher levels of the drug and lower levels of its active metabolite, desvenlafaxine. The clinical impact is unclear, but this genotype has been associated with adverse effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2D6 carries *3 (no function) and the other carries *4 (no function). Their activity values (0.0 + 0.0) give an activity score of 0.0, which CPIC classifies as a Poor Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "CYP2D6 Poor Metabolizers have reduced activity of the enzyme, leading to decreased metabolism of venlafaxine and increased levels of the drug. This results in a lower ratio of the active metabolite, desvenlafaxine, to the parent drug, venlafaxine.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2D6 Poor Metabolizer: Consider a clinically appropriate alternative antidepressant not predominantly metabolized by CYP2D6. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants. Sources: PMID:25974703, PMID:37032427.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not recommend specific alternatives or monitoring, but notes that other medicines, age, and organ function also play a role in treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG00096",
+        "drug": "trimipramine",
+        "action": "adjust",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.0,
+        "llm_words": 123,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with intermediate metabolizers for both CYP2C19 and CYP2D6, CPIC recommends considering a 25% reduction in the starting dose of trimipramine and monitoring with therapeutic drug monitoring to adjust doses as needed. This is because trimipramine is a tertiary amine that is less metabolized by intermediate metabolizers, leading to higher plasma concentrations and potentially increased side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *2 (no function). CPIC classifies this combination as an Intermediate Metabolizer. One copy of CYP2D6 carries *1 (normal function) and the other carries *4 (no function). Their activity values (1.0 + 0.0) give an activity score of 1.0, which CPIC classifies as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Trimipramine is a tertiary amine that is less metabolized by intermediate metabolizers for CYP2C19, resulting in higher plasma concentrations of the drug. This higher concentration increases the likelihood of side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer + CYP2D6 Intermediate Metabolizer: Consider a 25% reduction of recommended starting dose. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC also recommends monitoring with therapeutic drug monitoring to guide dose adjustments, reflecting that genetics only, other medicines, age, and organ function also play a role in determining the appropriate dose and treatment.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG00096",
+        "drug": "tamoxifen",
+        "action": "review",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.3,
+        "llm_words": 124,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For a patient with intermediate CYP2D6 metabolizer phenotype, CPIC recommends considering hormonal therapy such as an aromatase inhibitor for postmenopausal women or combining an aromatase inhibitor with ovarian function suppression for premenopausal women. If these options are not feasible, a higher but FDA approved tamoxifen dose (40 mg/day) should be considered. Avoid using CYP2D6 strong to weak inhibitors.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2D6 carries *1 (normal function) and the other carries *4 (no function). Their activity values (1.0 + 0.0) give an activity score of 1.0, which CPIC classifies as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Tamoxifen is converted to its active form, endoxifen, by CYP2D6. Intermediate metabolizers have lower endoxifen concentrations, which may lead to poorer outcomes such as higher risk of breast cancer recurrence and poorer event-free and recurrence-free survival compared to normal metabolizers.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2D6 Intermediate Metabolizer: Consider hormonal therapy such as an aromatase inhibitor for postmenopausal women or aromatase inhibitor along with ovarian function suppression in premenopausal women, given that these approaches are superior to tamoxifen regardless of CYP2D6 genotype (PMID 26211827). If aromatase inhibitor use is contraindicated, consideration should be given to use a higher but FDA approved tamoxifen dose (40 mg/day)(PMID 27226358). Avoid CYP2D6 strong to weak inhibitors. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level A for this gene-drug pair. Guideline: CYP2D6 and Tamoxifen. Sources: PMID:29385237.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention other genetic factors, but this result reflects genetics only. Other medicines, age, and organ function also play a role in treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG00096",
+        "drug": "clopidogrel",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.5,
+        "llm_words": 119,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For a patient with an intermediate metabolizer phenotype for CYP2C19, CPIC recommends avoiding standard dose clopidogrel and using prasugrel or ticagrelor at standard dose if no contraindications exist. This is due to reduced active metabolite formation, increased on-treatment platelet reactivity, and an increased risk of adverse cardiac and cerebrovascular events.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *2 (no function). CPIC classifies this combination as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Clopidogrel is a prodrug that requires CYP2C19 bioactivation to form its active metabolite. In intermediate metabolizers, reduced CYP2C19 activity leads to decreased active metabolite formation, resulting in less effective platelet inhibition.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer, CVI ACS PCI: Avoid standard dose (75 mg) clopidogrel if possible. Use prasugrel or ticagrelor at standard dose if no contraindication. (Strong recommendation)\nCYP2C19 Intermediate Metabolizer, CVI non-ACS non-PCI: No recommendation\nCYP2C19 Intermediate Metabolizer, NVI: Consider an alternative P2Y12 inhibitor at standard dose if clinically indicated and no contraindication. (Moderate recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level A for this gene-drug pair. Guideline: CYP2C19 and Clopidogrel. Sources: PMID:21716271, PMID:23698643, PMID:35034351.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC recommends considering an alternative P2Y12 inhibitor at standard dose if clinically indicated and no contraindication exists. This reflects genetics only, but other factors such as age, organ function, and the patient's overall health also play a role.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01583",
+        "drug": "doxepin",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 4.7,
+        "llm_words": 192,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with CYP2C19 Poor Metabolizer and CYP2D6 Intermediate Metabolizer, CPIC recommends avoiding doxepin use. If doxepin is necessary, use therapeutic drug monitoring to adjust the dose. This is because doxepin is a tertiary amine, and the patient's CYP2C19 Poor Metabolizer status will greatly reduce its conversion to secondary amines, potentially affecting response or side effects. The patient's CYP2D6 Intermediate Metabolizer status will result in reduced metabolism of TCAs to less active compounds compared to normal metabolizers, leading to higher plasma concentrations of active doxepin and increasing the risk of side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *2 allele (no function). CPIC classifies this combination as a Poor Metabolizer. One copy of CYP2D6 carries *4 (no function) and the other carries *41 (decreased function). Their activity values (0.0 + 0.25) give an activity score of 0.25, which CPIC classifies as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Doxepin is a tertiary amine, and the patient's CYP2C19 Poor Metabolizer status will greatly reduce its conversion to secondary amines, potentially affecting response or side effects. The patient's CYP2D6 Intermediate Metabolizer status will result in reduced metabolism of TCAs to less active compounds compared to normal metabolizers, leading to higher plasma concentrations of active doxepin and increasing the risk of side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Poor Metabolizer + CYP2D6 Intermediate Metabolizer: Avoid doxepin use; If doxepin is warranted, utilize therapeutic drug monitoring to guide dose adjustment. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC also recommends monitoring therapeutic drug levels to adjust the dose, reflecting the genetic differences in metabolism. Other factors such as age and organ function also play a role in determining the appropriate treatment for this patient.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01583",
+        "drug": "imipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.0,
+        "llm_words": 110,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with CYP2C19 Poor Metabolizer and CYP2D6 Intermediate Metabolizer, CPIC recommends avoiding imipramine use. If use is necessary, monitor plasma concentrations to adjust the dose. This reflects genetics, but other factors like age and organ function also influence treatment decisions.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *2 allele (no function). CPIC classifies this combination as a Poor Metabolizer. One copy of CYP2D6 carries *4 (no function) and the other carries *41 (decreased function). Their activity values (0.0 + 0.25) give an activity score of 0.25, which CPIC classifies as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "CYP2D6 Intermediate Metabolizer reduces the metabolism of tertiary amines compared to normal metabolizers, which may affect response or side effects. CYP2C19 Poor Metabolizer greatly reduces the metabolism of tertiary amines, leading to decreased conversion of tertiary amines to secondary amines, potentially affecting response or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Poor Metabolizer + CYP2D6 Intermediate Metabolizer: Avoid imipramine use; If imipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention other monitoring or alternatives, but other medicines, age, and organ function also play a role in treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01583",
+        "drug": "trimipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.4,
+        "llm_words": 129,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient with CYP2C19 Poor Metabolizer and CYP2D6 Intermediate Metabolizer, CPIC recommends avoiding trimipramine use. If trimipramine is necessary, monitor blood levels to adjust the dose. This recommendation is based on genetics, but other factors like age and organ function also influence treatment decisions.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *2 allele (no function). CPIC classifies this combination as a Poor Metabolizer. One copy of CYP2D6 carries *4 (no function) and the other carries *41 (decreased function). Their activity values (0.0 + 0.25) give an activity score of 0.25, which CPIC classifies as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "CYP2D6 Intermediate Metabolizer reduces the metabolism of tertiary amines compared to normal metabolizers, which may affect the response or side effects of TCAs. CYP2C19 Poor Metabolizer greatly reduces the metabolism of tertiary amines, leading to decreased conversion of tertiary amines to secondary amines, potentially affecting the response or side effects of trimipramine.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Poor Metabolizer + CYP2D6 Intermediate Metabolizer: Avoid trimipramine use; If trimipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "Other alternatives or monitoring that CPIC recommends are therapeutic drug monitoring to guide dose adjustments. This result reflects genetics only, but other medicines, age, and organ function also matter in treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01879",
+        "drug": "doxepin",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 4.3,
+        "llm_words": 152,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is an Ultrarapid CYP2C19 Metabolizer and a Normal CYP2D6 Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If doxepin is necessary, monitor the drug's concentration to adjust the dose. This recommendation is based on the fact that doxepin is metabolized by CYP2C19, and the patient's Ultrarapid CYP2C19 Metabolizer status will increase the conversion of doxepin to secondary amines, potentially affecting its efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *17 allele (increased function). CPIC classifies this combination as an Ultrarapid Metabolizer. Both copies of CYP2D6 carry the *1 allele (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Doxepin is metabolized by CYP2C19, and the patient's Ultrarapid CYP2C19 Metabolizer status will result in increased metabolism of doxepin, leading to a greater conversion of doxepin to secondary amines. This change in metabolism may affect the drug's efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Ultrarapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If doxepin is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention other alternatives or monitoring options, but this result reflects genetics only. Other factors such as the patient's age, organ function, and the use of other medications also play a role in determining the appropriate treatment.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01879",
+        "drug": "imipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.5,
+        "llm_words": 124,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is an Ultrarapid CYP2C19 Metabolizer and a Normal CYP2D6 Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If imipramine is necessary, monitor its levels to adjust the dose. This is because the patient's increased CYP2C19 activity will lead to faster conversion of imipramine to inactive metabolites, potentially reducing its effectiveness.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *17 allele (increased function). CPIC classifies this combination as an Ultrarapid Metabolizer. Both copies of CYP2D6 carry the *1 allele (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "The patient's Ultrarapid CYP2C19 Metabolizer phenotype results in faster metabolism of tertiary amines like imipramine, converting them to less active secondary amines, which could affect the drug's efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Ultrarapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If imipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention specific alternatives to imipramine, but it suggests monitoring therapeutic drug levels to adjust the dose. This result reflects genetics only, but other factors like age and organ function also influence treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG01879",
+        "drug": "trimipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 4.3,
+        "llm_words": 152,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is an Ultrarapid CYP2C19 Metabolizer and a Normal CYP2D6 Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If trimipramine is used, therapeutic drug monitoring should be employed to adjust the dose. This recommendation is based on the fact that trimipramine is metabolized by CYP2C19, and the patient's Ultrarapid CYP2C19 Metabolizer status will increase the conversion of trimipramine to its inactive metabolites, potentially affecting its efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "Both copies of CYP2C19 carry the *17 allele (increased function). CPIC classifies this combination as an Ultrarapid Metabolizer. Both copies of CYP2D6 carry the *1 allele (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Trimipramine is metabolized by CYP2C19. The patient's Ultrarapid CYP2C19 Metabolizer status will result in increased metabolism of trimipramine, leading to greater conversion of trimipramine to its inactive metabolites, which may affect its efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Ultrarapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If trimipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention other alternatives or monitoring, but this result reflects genetics only. Other factors such as the patient's age, organ function, and the use of other medications also play a role in determining the appropriate treatment for this patient.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "NA20832",
+        "drug": "doxepin",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 2,
+        "seconds": 6.5,
+        "llm_words": 117,
+        "first_try_problems": [
+          "calls the patient a CYP2C19 Normal Metabolizer but they are CYP2C19 Rapid Metabolizer"
+        ],
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is a CYP2C19 Rapid Metabolizer and CYP2D6 Normal Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If doxepin is necessary, therapeutic drug monitoring should be used to guide dose adjustments. This recommendation is based on the increased metabolism of tertiary amines by the patient, which may affect response or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *17 (increased function). CPIC classifies this combination as a Rapid Metabolizer. One copy of CYP2D6 carries *1 (normal function) and the other carries *2 (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "The patient's rapid metabolism of CYP2C19 results in greater conversion of tertiary amines to secondary amines, which can alter the effectiveness or side effects of drugs like doxepin.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Rapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If doxepin is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC also suggests monitoring therapeutic drug levels to adjust the dose of doxepin, reflecting the genetic differences in metabolism. Other factors such as age and organ function also influence treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "NA20832",
+        "drug": "imipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 2,
+        "seconds": 6.8,
+        "llm_words": 117,
+        "first_try_problems": [
+          "calls the patient a CYP2C19 Normal Metabolizer but they are CYP2C19 Rapid Metabolizer"
+        ],
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is a CYP2C19 Rapid Metabolizer and CYP2D6 Normal Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If imipramine is necessary, therapeutic drug monitoring should be used to guide dose adjustments. This recommendation is based on the increased metabolism of tertiary amines by CYP2C19 Rapid Metabolizers, which may affect response or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *17 (increased function). CPIC classifies this combination as a Rapid Metabolizer. One copy of CYP2D6 carries *1 (normal function) and the other carries *2 (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "The CYP2C19 Rapid Metabolizer phenotype results in increased metabolism of tertiary amines compared to normal metabolizers, potentially affecting the response or side effects of drugs like imipramine.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Rapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If imipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC also suggests monitoring the patient's imipramine levels to guide dose adjustments, reflecting that genetics only, other medicines, age, and organ function also play a role in determining the appropriate treatment.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "NA20832",
+        "drug": "trimipramine",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.4,
+        "llm_words": 125,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For this patient, who is a CYP2C19 Rapid Metabolizer and a CYP2D6 Normal Metabolizer, CPIC recommends considering an alternative drug not metabolized by CYP2C19. If trimipramine is necessary, monitor the patient's drug levels to adjust the dose appropriately. The patient's CYP2C19 status increases the metabolism of tertiary amines like trimipramine, potentially affecting its effectiveness or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *17 (increased function). CPIC classifies this combination as a Rapid Metabolizer. One copy of CYP2D6 carries *1 (normal function) and the other carries *2 (normal function). Their activity values (1.0 + 1.0) give an activity score of 2.0, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "The patient's CYP2C19 status results in increased metabolism of tertiary amines, which can lead to a faster conversion of these amines to secondary amines, potentially altering the drug's efficacy or side effects.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Rapid Metabolizer + CYP2D6 Normal Metabolizer: Consider alternative drug not metabolized by CYP2C19; If trimipramine is warranted, utilize therapeutic drug monitoring to guide dose adjustment. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC does not mention other monitoring or alternatives, but this result reflects genetics only. Other factors such as the patient's age, organ function, and the need for alternative therapies also play a role in treatment decisions.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG00403",
+        "drug": "trimipramine",
+        "action": "adjust",
+        "accepted": false,
+        "attempts": 2,
+        "seconds": 6.8,
+        "llm_words": 0,
+        "first_try_problems": null,
+        "final_problems": [
+          "calls the patient a CYP2C19 Normal Metabolizer but they are CYP2C19 Intermediate Metabolizer"
+        ],
+        "sections": [
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *3 (no function). CPIC classifies this combination as an Intermediate Metabolizer. One copy of CYP2D6 carries *1 (normal function) and the other carries *10 (decreased function). Their activity values (1.0 + 0.25) give an activity score of 1.25, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "CYP2C19: Reduced metabolism of tertiary amines compared to normal metabolizers CYP2D6: Normal metabolism of TCAs",
+            "source": "cpic"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer + CYP2D6 Normal Metabolizer: Initiate therapy with recommended starting dose. (Optional recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19 and Tricyclic Antidepressants. Sources: PMID:23486447, PMID:27997040.",
+            "source": "cpic"
+          }
+        ]
+      },
+      {
+        "sample": "HG00403",
+        "drug": "venlafaxine",
+        "action": "adjust",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 2.2,
+        "llm_words": 75,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For a patient who is a normal metabolizer of CYP2D6, the recommendation is to start venlafaxine therapy with the recommended dose. This is because normal metabolism of CYP2D6 does not significantly affect venlafaxine's metabolism.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2D6 carries *1 (normal function) and the other carries *10 (decreased function). Their activity values (1.0 + 0.25) give an activity score of 1.25, which CPIC classifies as a Normal Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Normal metabolism of CYP2D6 does not alter venlafaxine's metabolism, so the drug's effects and safety are not significantly impacted.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2D6 Normal Metabolizer: Initiate therapy with recommended starting dose. (Strong recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level B for this gene-drug pair. Guideline: CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants. Sources: PMID:25974703, PMID:37032427.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "This recommendation does not consider other genetic variations, such as poor or ultra-rapid metabolizers, or other factors like age or organ function.",
+            "source": "llm"
+          }
+        ]
+      },
+      {
+        "sample": "HG00403",
+        "drug": "clopidogrel",
+        "action": "avoid",
+        "accepted": true,
+        "attempts": 1,
+        "seconds": 3.1,
+        "llm_words": 111,
+        "first_try_problems": null,
+        "final_problems": null,
+        "sections": [
+          {
+            "key": "summary",
+            "title": "In short",
+            "text": "For a patient with an intermediate metabolizer phenotype for CYP2C19, CPIC recommends avoiding standard dose clopidogrel and using prasugrel or ticagrelor at standard dose if no contraindications exist. This is because reduced active metabolite formation leads to increased on-treatment platelet reactivity and higher risk of adverse cardiac and cerebrovascular events.",
+            "source": "llm"
+          },
+          {
+            "key": "genotype",
+            "title": "This patient's genotype",
+            "text": "One copy of CYP2C19 carries *1 (normal function) and the other carries *3 (no function). CPIC classifies this combination as an Intermediate Metabolizer.",
+            "source": "pharmcat"
+          },
+          {
+            "key": "mechanism",
+            "title": "Why it matters for this drug",
+            "text": "Clopidogrel is a prodrug that requires CYP2C19 bioactivation to form its active metabolite. In intermediate metabolizers, reduced CYP2C19 activity results in lower active metabolite formation, leading to less platelet inhibition.",
+            "source": "llm"
+          },
+          {
+            "key": "recommendation",
+            "title": "What CPIC recommends",
+            "text": "CYP2C19 Intermediate Metabolizer, CVI ACS PCI: Avoid standard dose (75 mg) clopidogrel if possible. Use prasugrel or ticagrelor at standard dose if no contraindication. (Strong recommendation)\nCYP2C19 Intermediate Metabolizer, CVI non-ACS non-PCI: No recommendation\nCYP2C19 Intermediate Metabolizer, NVI: Consider an alternative P2Y12 inhibitor at standard dose if clinically indicated and no contraindication. (Moderate recommendation)",
+            "source": "cpic"
+          },
+          {
+            "key": "evidence",
+            "title": "Strength of evidence",
+            "text": "CPIC evidence level A for this gene-drug pair. Guideline: CYP2C19 and Clopidogrel. Sources: PMID:21716271, PMID:23698643, PMID:35034351.",
+            "source": "cpic"
+          },
+          {
+            "key": "considerations",
+            "title": "Things to consider",
+            "text": "CPIC recommends considering an alternative P2Y12 inhibitor at standard dose if clinically indicated and no contraindication exists. This result reflects genetics only, and other medicines, age, and organ function also matter.",
+            "source": "llm"
+          }
+        ]
+      }
+    ]
+  }
 }
