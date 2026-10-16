@@ -20,12 +20,12 @@ def load_json(name: str, default=None):
     path = RAW_DIR / name
     if not path.exists():
         return default
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def write_json(name: str, data) -> None:
     path = OUT_DIR / name
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"  -> {len(data)} rows written to {path}")
 
 
@@ -225,6 +225,12 @@ def main() -> None:
             "comments": r.get("comments"),
             "dosing_information": bool(r.get("dosinginformation")),
             "alternate_drug_available": bool(r.get("alternatedrugavailable")),
+            # The full condition this recommendation is gated on. A CPIC row can require several genes
+            # at once (e.g. amitriptyline: CYP2C19 PM *and* CYP2D6 NM), and CYP2D6 rows are further keyed
+            # by activity score in `lookupkey`. Kept as JSON so retrieval can match the whole condition
+            # against a patient instead of only the one phenotype edge it was reached through.
+            "phenotypes_json": json.dumps({**(r.get("phenotypes") or {}), **(r.get("allelestatus") or {})}, sort_keys=True),
+            "lookupkey_json": json.dumps(r.get("lookupkey") or {}, sort_keys=True),
         })
         recommends_drug_edges.append({"recommendation_id": rec_id, "drug_rxnorm_id": drug_id})
         gid = r.get("guidelineid")

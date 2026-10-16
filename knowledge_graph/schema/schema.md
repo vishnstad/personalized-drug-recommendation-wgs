@@ -15,7 +15,7 @@ the evidence say, and what's the traceable path behind that answer?*
 | `Phenotype` | `id` (`gene:phenotype_name`) | `gene`, `name` (e.g. `CYP2D6 Poor Metabolizer`), `activity_score`, `ehr_priority` | CPIC `diplotype`/`gene_result` |
 | `Drug` | `rxnorm_id` | `name` | CPIC `drug` (already RxNorm-keyed) |
 | `Guideline` | `id` | `name`, `url`, `source` | CPIC `guideline` |
-| `Recommendation` | `id` | `drug_recommendation`, `classification`, `implications`, `population`, `comments` | CPIC `recommendation` |
+| `Recommendation` | `id` | `drug_recommendation`, `classification`, `implications`, `population`, `comments`, `phenotypes_json` (full multi-gene condition), `lookupkey_json` (e.g. CYP2D6 activity score) | CPIC `recommendation` |
 | `Publication` | `pmid` | `title` (if available) | CPIC `publication` |
 | `ADR` | `id` (meddra term, normalized lowercase) | `name`, `meddra_id` | SIDER (best-effort drug-name matched) |
 
@@ -58,6 +58,14 @@ a patient's specific diplotype to a phenotype upstream of this graph). So the gr
 `Diplotype` nodes for explainability/traceability, while the full CPIC diplotype→phenotype
 table is kept as a flat lookup (`data/processed/diplotype_phenotype_lookup.csv`) for the actual
 patient-diplotype resolution step at the Layer 1/2 boundary.
+
+## Matching a patient to recommendations
+
+A `Recommendation` is linked by `HAS_RECOMMENDATION` from *each* phenotype in its condition, so reaching it
+through one matching phenotype is not enough: a CPIC row for amitriptyline is gated on CYP2C19 **and** CYP2D6.
+`retrieval/queries.py::recommendations_for_patient` therefore checks the stored `phenotypes_json` against the
+patient's full phenotype set (an untested gene counts as `No Result`) and, when the patient's CYP2D6 activity
+score is known, the `lookupkey_json` score.
 
 ## Why this shape
 

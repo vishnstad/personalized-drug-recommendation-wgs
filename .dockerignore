@@ -1,0 +1,11 @@
+.git
+.venv
+**/__pycache__
+data
+tools
+knowledge_graph/data
+explainability/output
+docs
+tests
+*.log
+.env

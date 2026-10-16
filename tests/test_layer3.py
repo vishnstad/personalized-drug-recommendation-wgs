@@ -15,7 +15,14 @@ from retrieval.hybrid_retriever import HybridRetriever
 from llm.recommend import build_candidates, classify_action, rank, template_explanation
 
 
+def test_guideline_lookup_is_exact_drug_only():
+    from retrieval.hybrid_retriever import guideline_text_for_drug
+    assert "codeine" in guideline_text_for_drug("Codeine").lower()
+    assert guideline_text_for_drug("abacavir") == ""  # no curated summary -> nothing, not a neighbour's text
+
+
 def test_hybrid_retriever_initialization_and_query(tmp_path):
+    pytest.importorskip("chromadb")
     retriever = HybridRetriever(chroma_path=tmp_path / "chroma_test")
     assert retriever.collection.count() > 0
 
@@ -95,15 +102,15 @@ def test_layer1_to_layer3_data_flow():
         }
     ]
 
-    cands = build_candidates({
-        "CYP2C19": mock_cyp2c19_rows,
-        "CYP2D6": mock_cyp2d6_rows,
-    })
+    for r, gene in ((mock_cyp2c19_rows[0], "CYP2C19"), (mock_cyp2d6_rows[0], "CYP2D6")):
+        r["condition"] = {gene: mock_patient_profile["phenotypes"][gene]}
+        r["genes"] = [gene]
+    cands = build_candidates(mock_cyp2c19_rows + mock_cyp2d6_rows)
     ranked = rank(cands)
     assert len(ranked) == 2
 
     # Check template explanation formatting
     clop_cand = cands["clopidogrel"]
-    expl = template_explanation(clop_cand, mock_patient_profile["phenotypes"])
+    expl = template_explanation(clop_cand)
     assert "CYP2C19 Intermediate Metabolizer" in expl
     assert "PMID:23698643" in expl

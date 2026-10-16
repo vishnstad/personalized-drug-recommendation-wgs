@@ -24,8 +24,10 @@ def get_headers() -> dict[str, str]:
     return headers
 
 
-def chat(system: str, user: str, timeout: int = 120, temperature: float = 0.0) -> str:
-    """Send chat request to configured OpenAI-compatible endpoint."""
+def chat(system: str, user: str, timeout: int = 120, temperature: float = 0.0, json_mode: bool = False,
+         max_tokens: int | None = None) -> str:
+    """Send chat request to configured OpenAI-compatible endpoint. json_mode asks for a JSON object reply
+    (supported by Ollama, LM Studio and OpenAI via `response_format`)."""
     url = f"{BASE_URL}/chat/completions"
     payload = {
         "model": MODEL,
@@ -35,6 +37,10 @@ def chat(system: str, user: str, timeout: int = 120, temperature: float = 0.0) -
             {"role": "user", "content": user},
         ],
     }
+    if json_mode:
+        payload["response_format"] = {"type": "json_object"}
+    if max_tokens:
+        payload["max_tokens"] = max_tokens
     resp = requests.post(url, json=payload, headers=get_headers(), timeout=timeout)
     resp.raise_for_status()
     data = resp.json()

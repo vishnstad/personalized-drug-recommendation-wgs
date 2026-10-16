@@ -25,7 +25,7 @@ def load_json(name: str):
     if not path.exists():
         print(f"  skip {name} (not found)")
         return []
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def run_batched(session, query: str, rows: list[dict], label: str) -> None:
@@ -79,7 +79,9 @@ NODE_LOADERS = [
             r.population = row.population,
             r.comments = row.comments,
             r.dosing_information = row.dosing_information,
-            r.alternate_drug_available = row.alternate_drug_available
+            r.alternate_drug_available = row.alternate_drug_available,
+            r.phenotypes_json = row.phenotypes_json,
+            r.lookupkey_json = row.lookupkey_json
     """, "Recommendation nodes"),
     ("nodes_adr.json", """
         UNWIND $rows AS row

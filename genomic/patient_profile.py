@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from genomic.call_phenotypes import call_pharmcat
-from genomic.preprocess_sample import DEFAULT_OUT_DIR, extract_sample_vcf
+from genomic.preprocess_sample import DEFAULT_OUT_DIR, FILL_MISSING_AS_REF, extract_sample_vcf
 from genomic.structural_annotator import annotate_gene_call
 
 PEDIGREE_FILE = ROOT / "data" / "raw" / "20130606_g1k_3202_samples_ped_population.txt"
@@ -101,6 +101,12 @@ def generate_patient_profile(
         "diplotypes": diplotypes_summary,
         "genes": annotated_genes,
         "raw_vcf": str(vcf_path),
+        "vcf_preprocessing": {
+            "missing_positions_filled_as_reference": FILL_MISSING_AS_REF,
+            "note": "PharmCAT positions absent from the 1000 Genomes cohort VCF (inside the extracted regions) "
+                    "were treated as homozygous reference" if FILL_MISSING_AS_REF else
+                    "absent PharmCAT positions left as missing (calls may be ambiguous)",
+        },
         "source": "PharmCAT 3.4.0 (CPIC-compliant)",
     }
 
@@ -110,6 +116,14 @@ def generate_patient_profile(
     print(f"[{sample_id}] Patient profile saved to {profile_path}")
 
     return profile
+
+
+def load_or_generate_profile(sample_id: str, output_dir: Path = DEFAULT_OUT_DIR, force: bool = False) -> dict[str, Any]:
+    """Return the saved profile JSON if this sample was already processed, else run Layer 1."""
+    profile_path = output_dir / sample_id / f"{sample_id}_patient_profile.json"
+    if profile_path.exists() and not force:
+        return json.loads(profile_path.read_text(encoding="utf-8"))
+    return generate_patient_profile(sample_id, output_dir=output_dir, force_reextract=force)
 
 
 def get_patient_phenotypes(sample_id: str, output_dir: Path = DEFAULT_OUT_DIR) -> dict[str, str]:

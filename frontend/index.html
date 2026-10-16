@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PGx Recommender</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/cytoscape.min.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./" title="Start page">
+    <span class="brand-mark">PGx</span>
+    <span class="brand-text">
+      <span class="brand-title">Genome-guided prescribing</span>
+      <span class="brand-sub">CYP2C19 · CYP2D6 · CPIC knowledge graph</span>
+    </span>
+  </a>
+  <div class="search">
+    <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>
+    <input id="patient-search" placeholder="Search 3,202 genomes by sample ID or population (e.g. NA12878, GBR)" autocomplete="off" spellcheck="false">
+    <div id="search-results" class="search-results" hidden></div>
+  </div>
+  <button id="manual-btn" class="btn ghost">Enter phenotypes</button>
+  <div id="status" class="status"></div>
+</header>
+
+<section id="patient-strip" class="patient-strip" hidden></section>
+
+<nav id="stepper" class="stepper" hidden>
+  <button data-step="genome"><span class="num">1</span><span class="lbl">Genome<small>variants in the sequence</small></span></button>
+  <button data-step="genotype"><span class="num">2</span><span class="lbl">Genotype<small>star alleles → phenotype</small></span></button>
+  <button data-step="graph"><span class="num">3</span><span class="lbl">Knowledge graph<small>matching CPIC evidence</small></span></button>
+  <button data-step="recs"><span class="num">4</span><span class="lbl">Recommendations<small>what to prescribe</small></span></button>
+  <button data-step="method"><span class="num">5</span><span class="lbl">Method<small>how &amp; limits</small></span></button>
+</nav>
+
+<main id="main">
+  <section id="landing" class="landing"></section>
+  <section id="view-genome" class="view" hidden></section>
+  <section id="view-genotype" class="view" hidden></section>
+  <section id="view-graph" class="view view-graph" hidden>
+    <div class="graph-bar">
+      <div class="seg" id="graph-mode">
+        <button data-mode="patient" class="active">Patient overview</button>
+        <button data-mode="path" disabled>Evidence path</button>
+      </div>
+      <div class="graph-title">
+        <h2 id="graph-title"></h2>
+        <p id="graph-sub"></p>
+      </div>
+      <button id="walk-btn" class="btn primary small" hidden>▶ Walk through</button>
+    </div>
+    <div class="graph-wrap">
+      <div class="canvas">
+        <div id="cy"></div>
+        <div class="zoom">
+          <button id="zoom-in" title="Zoom in">+</button>
+          <button id="zoom-out" title="Zoom out">−</button>
+          <button id="zoom-fit" title="Fit to screen">⤢</button>
+        </div>
+        <div id="walk" class="walk" hidden>
+          <div class="walk-step" id="walk-count"></div>
+          <div class="walk-text" id="walk-text"></div>
+          <div class="walk-ctrl">
+            <button id="walk-prev" class="btn ghost small">←</button>
+            <button id="walk-next" class="btn ghost small">→</button>
+            <button id="walk-stop" class="btn ghost small">Close</button>
+          </div>
+        </div>
+      </div>
+      <aside id="inspector" class="inspector"></aside>
+    </div>
+    <div id="legend" class="legend"></div>
+  </section>
+  <section id="view-recs" class="view" hidden></section>
+  <section id="view-method" class="view" hidden></section>
+
+  <footer id="step-nav" class="step-nav" hidden>
+    <button id="prev-step" class="btn ghost"></button>
+    <span class="kbd-hint">Use ← → keys to move between steps</span>
+    <button id="next-step" class="btn primary"></button>
+  </footer>
+</main>
+
+<div id="manual-modal" class="modal" hidden>
+  <div class="modal-card" role="dialog" aria-labelledby="manual-title">
+    <h3 id="manual-title">Enter metabolizer phenotypes</h3>
+    <p class="muted">Skip genotyping and query the knowledge graph directly, e.g. with a result from a clinical lab report.</p>
+    <label>CYP2C19 <select id="ph-CYP2C19"></select></label>
+    <label>CYP2D6 <select id="ph-CYP2D6"></select></label>
+    <label>CYP2D6 activity score <span class="muted">(optional; some CPIC advice depends on it)</span>
+      <select id="as-CYP2D6"><option value="">not specified</option></select></label>
+    <div class="modal-actions">
+      <button id="manual-cancel" class="btn ghost">Cancel</button>
+      <button id="manual-run" class="btn primary">Get recommendations</button>
+    </div>
+  </div>
+</div>
+
+<div id="busy" class="busy" hidden>
+  <div class="busy-card">
+    <div class="spinner"></div>
+    <div>
+      <div id="busy-title" class="busy-title"></div>
+      <div id="busy-sub" class="muted"></div>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast" hidden></div>
+<div id="tooltip" class="tooltip" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

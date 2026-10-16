@@ -85,7 +85,7 @@ def llm_plausibility_check(gene: str, phenotype: str, drug: str, recommendation_
         return (True, "Verified plausible by LLM validator")
     except Exception:
         # Fallback to rule-based check if LLM endpoint unavailable
-        return (True, "Validated via rule-based safety mechanism (LLM endpoint unreachable)")
+        return (True, "LLM validator unreachable; only the rule-based check was applied")
 
 
 def validate_claim_plausibility(
