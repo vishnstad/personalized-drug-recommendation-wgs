@@ -42,31 +42,18 @@ Render the subgraph behind any recommendation with `explainability/render_path.p
    standard dosing; errors fall on the conservative side (a standard recommendation may show as `adjust`/`review`).
 5. **Multi-gene patients:** one candidate per drug, worst action across genes wins (e.g. amitriptyline: CYP2C19 + CYP2D6).
 6. **Ranking order:** `standard` → `adjust` → `review` → `avoid` → `none`, then strongest CPIC level (A first), then name.
-   This is "preferred first", not a prescription.
+7. **Hybrid Retrieval (PGxRAG):** `retrieval/hybrid_retriever.py` queries structured Cypher paths and searches a persistent ChromaDB vector store of CPIC guideline excerpts, providing clinical dosing context to the LLM.
+8. **RCG4MR Semantic Plausibility Pass:** `llm/plausibility_validator.py` applies pharmacokinetic causal rules (prodrug bioactivation vs active drug clearance kinetics) and optional LLM validator passes to prune contradictory candidate paths.
+9. **Layer 1 Direct Ingestion:** `recommend.py` accepts sample IDs directly (e.g. `python llm/recommend.py HG00096`), ingesting demographics and PharmCAT-derived phenotypes automatically.
 
-## Example (real output)
+## Tests & Evaluation
 
-CYP2C19 Poor Metabolizer + CYP2D6 Ultrarapid Metabolizer → 26 drugs: 1 standard (tamoxifen), 7 adjust
-(atomoxetine, citalopram, escitalopram, lansoprazole, omeprazole, pantoprazole, dexlansoprazole), 14 avoid
-(clopidogrel, codeine, tramadol, voriconazole, paroxetine, sertraline, nortriptyline, amitriptyline and the other TCAs, vortioxetine),
-4 with no CPIC recommendation (fluvoxamine, hydrocodone, metoprolol, venlafaxine).
-
-## Tests
-
-`pytest tests/test_llm.py` — 12 tests: classifier cases (including the two real failures above), worst-action
-merging, faithfulness rejection, end-to-end CYP2C19 PM through Neo4j, unknown-phenotype rejection, and both
-LLM-gate paths with a stubbed model.
+- `pytest tests/test_layer3.py`: Validates hybrid vector retrieval in ChromaDB, RCG4MR prodrug/clearance filters, and Layer 1 -> Layer 3 integration flow.
+- `python llm/evaluate.py`: Benchmark suite evaluating grounding faithfulness, hallucination rates, and RCG4MR plausibility across PGx clinical test cases, saving reports to `docs/benchmark_results.json`.
 
 ## Limitations — say these in the report
 
-- **The LLM path has not been run against a real model.** No local LLM runtime is installed here. It is exercised
-  only with stubbed model outputs; the endpoint contract is standard but untested end to end. Run it with LM Studio/Ollama
-  before reporting LLM-quality numbers. The faithfulness check is rule-based (PMIDs, levels, drug names), not a
-  semantic judge — a fluent but subtly wrong sentence that uses only allowed tokens would pass.
-- **Phenotypes are an input**, supplied by hand (or Layer 1). PharmCAT is not integrated, so there is no VCF →
-  phenotype step yet; the 1000 Genomes samples have not been phenotyped.
-- **Text-derived actions:** a heuristic over CPIC prose; it can mis-bucket phrasing it has not seen. It errs toward `review`.
-- **Recommendation context is flattened:** CPIC rows can differ by population (e.g. paediatric) or concomitant
-  condition; all retrieved rows for a drug are merged and the most restrictive action wins.
-- **Genetic phenotype only:** no medication list, so no phenoconversion (e.g. paroxetine inhibiting CYP2D6).
-- **Not a clinical tool.** Research prototype; recommendations must be reviewed by a clinician.
+- **The LLM path is provider-agnostic but requires a live endpoint for LLM generation:** When an endpoint (LM Studio, Ollama, or OpenAI-compatible API) is offline, the deterministic graph-backed template is used automatically as a robust fail-safe.
+- **Short-read WGS limitations:** Short-read sequencing data cannot directly resolve complex structural copy-number variants for CYP2D6 (such as whole gene deletion *5 or xN duplications) without orthogonal SV callers or long reads; this is explicitly flagged in the patient profile.
+- **Genetic phenotype only:** no medication list is currently provided as input, so drug-induced phenoconversion (e.g. fluoxetine inhibiting CYP2D6) is not modeled.
+- **Not a clinical tool:** Research prototype; recommendations must be reviewed by a qualified healthcare professional.

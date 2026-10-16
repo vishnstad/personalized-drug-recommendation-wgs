@@ -182,13 +182,11 @@ remote region query against the official source (kept as our record of "what
 we obtained, and how"); `data/processed/` is the further-refined, exact-gene
 subset intended for downstream pharmacogenomic processing.
 
-## 11. What's next
+## 11. Milestone 1 & Layer 1 Completion: Automated Sample Phenotyping
 
-This completes Milestone 1: environment, project structure, and a small,
-reproducible, real, region-scoped genomic dataset. The next milestone (not
-started yet) is running **PharmCAT** on `data/processed/cyp2c19.vcf.gz` and
-`cyp2d6.vcf.gz` to call pharmacogenomic **phenotypes** (e.g., "CYP2C19 poor
-metabolizer") from these raw genotypes — this is a separate, more involved
-step (PharmCAT has its own input-format and preprocessing requirements,
-particularly for CYP2D6) and should be tackled as its own milestone before
-touching Neo4j, the LLM, or any of the later pipeline stages.
+PharmCAT 3.4.0 is fully integrated into the project pipeline:
+1. `genomic/preprocess_sample.py`: Automatically slices individual sample genotypes across both gene regions (chr10 CYP2C19 and chr22 CYP2D6) from the 3,202 1000 Genomes panel, normalizes multiallelic variants, and produces a single combined, indexed sample VCF (`data/processed/samples/<sample_id>/<sample_id>_pgx.vcf.gz`).
+2. `genomic/call_phenotypes.py`: Executes PharmCAT's Named Allele Matcher, Phenotyper, and Reporter (`tools/pharmcat/pharmcat-3.4.0-all.jar`) with `-research cyp2d6` on the sample VCF, parsing the resulting `.report.tsv` and `.phenotype.json` into structured star-allele diplotypes, activity scores, and CPIC metabolizer phenotypes.
+3. `genomic/structural_annotator.py`: Implements structural variant confidence assessment (highlighting short-read copy-number assumptions for CYP2D6) and flags Variants of Unknown Significance (VUS) per Lauschke et al. 2023.
+4. `genomic/patient_profile.py`: Orchestrates the complete pipeline, enriches with demographic metadata (population, superpopulation, sex from IGSR pedigree file), and exports a standardized patient profile JSON directly feeding into Layer 2 and Layer 3.
+5. `tests/test_genomic.py`: Unit and integration test suite verifying sample extraction, PharmCAT calling, structural assessments, and patient profile generation.

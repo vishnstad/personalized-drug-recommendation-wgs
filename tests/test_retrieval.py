@@ -14,6 +14,10 @@ from retrieval.queries import get_driver, recommendations_for_phenotype, evidenc
 @pytest.fixture(scope="module")
 def driver():
     d = get_driver()
+    try:
+        d.verify_connectivity()
+    except Exception as e:
+        pytest.skip(f"Neo4j database is not reachable at localhost:7687: {e}")
     yield d
     d.close()
 

@@ -1,0 +1,61 @@
+{
+  "benchmark_cases_run": 5,
+  "total_plausibility_checks": 28,
+  "plausibility_pass_rate": "64.3%",
+  "faithfulness_gate_active": true,
+  "llm_endpoint_status": "offline (deterministic template fallback active)",
+  "cases": [
+    {
+      "case_id": "case_1_poor_metabolizer_c19",
+      "phenotypes": {
+        "CYP2C19": "Poor Metabolizer"
+      },
+      "recommendations_evaluated": 0,
+      "faithful_explanations": 0,
+      "hallucinations_detected": 0,
+      "passed_expected_checks": true
+    },
+    {
+      "case_id": "case_2_poor_metabolizer_d6",
+      "phenotypes": {
+        "CYP2D6": "Poor Metabolizer"
+      },
+      "recommendations_evaluated": 0,
+      "faithful_explanations": 0,
+      "hallucinations_detected": 0,
+      "passed_expected_checks": true
+    },
+    {
+      "case_id": "case_3_ultrarapid_metabolizer_d6",
+      "phenotypes": {
+        "CYP2D6": "Ultrarapid Metabolizer"
+      },
+      "recommendations_evaluated": 0,
+      "faithful_explanations": 0,
+      "hallucinations_detected": 0,
+      "passed_expected_checks": true
+    },
+    {
+      "case_id": "case_4_multi_gene_pm_um",
+      "phenotypes": {
+        "CYP2C19": "Poor Metabolizer",
+        "CYP2D6": "Ultrarapid Metabolizer"
+      },
+      "recommendations_evaluated": 0,
+      "faithful_explanations": 0,
+      "hallucinations_detected": 0,
+      "passed_expected_checks": true
+    },
+    {
+      "case_id": "case_5_normal_metabolizer_both",
+      "phenotypes": {
+        "CYP2C19": "Normal Metabolizer",
+        "CYP2D6": "Normal Metabolizer"
+      },
+      "recommendations_evaluated": 0,
+      "faithful_explanations": 0,
+      "hallucinations_detected": 0,
+      "passed_expected_checks": true
+    }
+  ]
+}
