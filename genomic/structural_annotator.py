@@ -7,6 +7,7 @@ Evaluates the certainty of short-read WGS pharmacogene calls, flagging:
 3. Missing or uncalled positions in the VCF that could impact star-allele determination.
 """
 
+import re
 from typing import Any
 
 
@@ -17,8 +18,9 @@ def evaluate_structural_confidence(gene: str, call_data: dict[str, Any], raw_war
 
     if gene == "CYP2D6":
         # Short-read NGS caveat: cannot detect copy-number variations (e.g. *5 deletion, *1xN)
-        dip = call_data.get("diplotype", "")
-        if "xN" in dip or "*5" in dip:
+        alleles = [a.strip() for a in call_data.get("diplotype", "").split("/")]
+        # *5 = whole-gene deletion; "x2"/"xN" suffix = duplication (*1x2, *2xN). Compare per allele so *50-*59 don't match.
+        if any(a == "*5" or re.search(r"x(\d+|N)$", a) for a in alleles):
             confidence = "moderate"
             flags.append("Call involves structural / copy-number allele (*5 or xN duplication); short-read WGS requires orthogonal SV validation.")
         else:
@@ -29,9 +31,16 @@ def evaluate_structural_confidence(gene: str, call_data: dict[str, Any], raw_war
         if confidence == "high":
             confidence = "moderate"
 
-    for w in raw_warnings:
-        if "duplicate entry" in w.lower():
-            flags.append(f"VCF formatting notice: {w}")
+    if call_data.get("ambiguous_call"):
+        confidence = "low"
+        n = len(call_data.get("diplotype_candidates") or [])
+        flags.append(f"Ambiguous call: {n} candidate diplotypes fit the observed variants with different phenotypes "
+                     f"(defining positions absent from the variant-only VCF); reported as Indeterminate. "
+                     f"Targeted genotyping or a gVCF would resolve it.")
+
+    if any("duplicate entry" in w.lower() for w in raw_warnings):
+        # 1000 Genomes splits multi-allelic sites into several records at one position; PharmCAT keeps the first
+        flags.append("VCF notice: multi-allelic site(s) split across records; PharmCAT used the first valid entry.")
 
     return {
         "confidence_level": confidence,
