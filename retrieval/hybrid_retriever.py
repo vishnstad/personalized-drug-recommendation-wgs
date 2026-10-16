@@ -13,14 +13,13 @@ import json
 from pathlib import Path
 from typing import Any, Optional
 
-import chromadb
-from chromadb.config import Settings
 
 ROOT = Path(__file__).resolve().parent.parent
 CHROMA_DIR = ROOT / "data" / "chroma_db"
-CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 
-# Curated reference guidelines and clinical implications for project pharmacogenes
+# Hand-curated summaries of the CPIC guidelines for the project's headline drugs (written for this
+# project, citing the guideline PMIDs) -- NOT pulled from the CPIC API. The authoritative per-patient
+# recommendation text always comes from the graph; these only add background context to explanations.
 CORE_GUIDELINE_CORPUS = [
     {
         "id": "cpic_cyp2c19_clopidogrel",
@@ -105,10 +104,18 @@ CORE_GUIDELINE_CORPUS = [
 ]
 
 
+def guideline_text_for_drug(drug: str) -> str:
+    """Exact-drug lookup over the curated corpus (no similarity search, no vector store needed):
+    returns "" rather than a nearest-neighbour excerpt about some *other* drug."""
+    return " ".join(d["text"] for d in CORE_GUIDELINE_CORPUS if d["drug"] == drug.lower())
+
+
 class HybridRetriever:
     """Orchestrates structured Knowledge Graph path retrieval alongside vector search over guideline documents."""
 
     def __init__(self, chroma_path: Path = CHROMA_DIR):
+        import chromadb  # optional dependency: only the semantic-search path needs it
+
         self.chroma_client = chromadb.PersistentClient(path=str(chroma_path))
         self.collection = self.chroma_client.get_or_create_collection(
             name="cpic_guidelines",
@@ -154,6 +161,9 @@ class HybridRetriever:
                     "relevance_distance": dist,
                 })
         return docs
+
+    def guideline_text_for_drug(self, drug: str) -> str:
+        return guideline_text_for_drug(drug)
 
     def retrieve_hybrid_context(
         self,
