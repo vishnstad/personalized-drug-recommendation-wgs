@@ -3,13 +3,16 @@
 __pycache__/
 *.pyc
 
-# Local micromamba toolchain (bcftools/htslib), not meant to be committed
+# Local micromamba / PharmCAT toolchain, not meant to be committed
 .tools/
+tools/
 
 # data/raw/ and data/processed/ ARE committed (small, ~1.5MB, the milestone-1 deliverable)
 # data/test/ stays ignored -- for local scratch testing only
 data/test/*
 !data/test/.gitkeep
+data/processed/samples/
+data/chroma_db/
 
 # knowledge_graph/ pulls live from CPIC/HGNC/SIDER APIs on every run (regenerable,
 # and the raw CPIC diplotype dump alone is ~120MB) -- cache is local-only, not committed
@@ -19,6 +22,7 @@ knowledge_graph/data/
 explainability/output/
 
 .env
+*.log
 
 # OS
 .DS_Store

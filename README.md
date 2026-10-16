@@ -10,15 +10,13 @@ WGS data → VCF → variant processing → pharmacogene identification
 → LLM → drug recommendation + explanation → Streamlit interface
 ```
 
-## Current milestone: Genomic setup & dataset preparation
+## Implementation Status
 
-We are currently only working on obtaining a real 1000 Genomes sample, inspecting
-its VCF, and extracting the CYP2C19 / CYP2D6 pharmacogene regions. See
-[`docs/genomic_setup.md`](docs/genomic_setup.md) for full details once available.
-
-Not yet built: PharmCAT phenotype calling, FastAPI backend, Streamlit frontend. The
-grounded recommender in `llm/` is built but has only been run with a stubbed model
-(see `docs/llm_layer.md`).
+- **Layer 1 (Genomic Processing):** Built and verified. PharmCAT 3.4.0 runs on patient VCF slices extracted from the 1000 Genomes 30x dataset, calling star-allele diplotypes and metabolizer phenotypes with structural variant and VUS handling (see [`docs/genomic_setup.md`](docs/genomic_setup.md)).
+- **Layer 2 (Knowledge Graph):** Built and loaded into Neo4j from live CPIC, HGNC, and SIDER APIs; 23/23 validation checks pass (see [`docs/layer2_writeup.md`](docs/layer2_writeup.md)).
+- **Layer 3 (Hybrid Retrieval & Grounded LLM):** Built and verified. Hybrid graph + ChromaDB vector retrieval, RCG4MR semantic plausibility filtering, deterministic action ranking, and strict faithfulness checking (see [`docs/llm_layer.md`](docs/llm_layer.md)).
+- **Layer 4 (Explainability):** Built. Attaches CPIC evidence grades (A–D) to every claim and renders interactive PyVis subgraphs (see [`docs/layer4_writeup.md`](docs/layer4_writeup.md)).
+- **Layer 5 (Interface):** Next milestone — FastAPI backend and Streamlit UI.
 
 ## Knowledge graph & explainability (Layer 2 / Layer 4)
 
